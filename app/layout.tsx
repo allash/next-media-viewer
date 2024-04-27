@@ -7,38 +7,52 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <div className="flex h-screen">
-        {/* Sidebar */}
-        <div className="w-64 flex-shrink-0 bg-gray-800">
-          {/* Sidebar content */}
-          <div className="p-4">
-            <h1 className="text-lg font-semibold text-white">Dashboard</h1>
-            {/* Sidebar links */}
-            <ul className="mt-4">
-              <li>
-                <a href="#" className="text-gray-300 hover:text-white">
-                  Collection 1
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-300 hover:text-white">
-                  Collection 2
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-300 hover:text-white">
-                  Collection 3
-                </a>
-              </li>
-              {/* Add more sidebar links as needed */}
-            </ul>
-          </div>
-        </div>
+      <div className="flex h-screen flex-col">
+        {/* Header */}
+        <header className="flex items-center justify-between bg-gray-800 px-4 py-2">
+          {/* Logo placeholder */}
+          <div className="text-lg font-semibold text-white">Logo</div>
 
-        {/* Main content area */}
-        <div className="flex-1">
-          {/* Page content */}
-          {children}
+          {/* "Add collection" button */}
+          <button className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600">
+            Add Collection
+          </button>
+        </header>
+
+        {/* Main content */}
+        <div className="flex flex-1">
+          {/* Sidebar */}
+          <div className="w-64 flex-shrink-0 bg-gray-800">
+            {/* Sidebar content */}
+            <div className="p-4">
+              <h1 className="text-lg font-semibold text-white">Sidebar</h1>
+              {/* Sidebar links */}
+              <ul className="mt-4">
+                <li>
+                  <a href="#" className="text-gray-300 hover:text-white">
+                    Link 1
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-gray-300 hover:text-white">
+                    Link 2
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-gray-300 hover:text-white">
+                    Link 3
+                  </a>
+                </li>
+                {/* Add more sidebar links as needed */}
+              </ul>
+            </div>
+          </div>
+
+          {/* Main content area */}
+          <div className="flex-1">
+            {/* Page content */}
+            {children}
+          </div>
         </div>
       </div>
     </html>
