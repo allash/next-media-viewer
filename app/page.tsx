@@ -1,11 +1,10 @@
-import AcmeLogo from '@/app/ui/acme-logo';
-import { ArrowRightIcon } from '@heroicons/react/24/outline';
-import Link from 'next/link';
+import VideoPlayer from '@/app/ui/components/VideoPlayer';
 
 export default function Page() {
   return (
     <main className="flex min-h-screen flex-col p-6">
-      <h3>Hello 2</h3>
+      <h1>Video Player App</h1>
+      <VideoPlayer />
     </main>
   );
 }
