@@ -1,4 +1,4 @@
-import VideoPlayer from '@/app/ui/components/VideoPlayer';
+import VideoPlayer from './ui/components/VideoPlayer';
 
 export default function Page() {
   return (
