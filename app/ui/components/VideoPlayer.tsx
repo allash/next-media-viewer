@@ -1,21 +1,28 @@
 'use client';
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactPlayer from 'react-player';
 
 const VideoPlayer = () => {
   const [isPlaying, setIsPlaying] = React.useState(true);
   const [isReady, setIsReady] = React.useState(false);
+  const [isMounted, setIsMounted] = React.useState(false);
   const playerRef = React.useRef();
 
   const onReady = React.useCallback(() => {
     if (!isReady) {
-      const timeToStart = 7 * 60 + 12.6;
+      const timeToStart = 27 * 60 + 12.6;
       playerRef.current.seekTo(timeToStart, 'seconds');
       setIsReady(true);
     }
   }, [isReady]);
 
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   let videoSrc = `/collections/demo.mp4`;
+
+  if (!isMounted) return null;
 
   return (
     <div>

@@ -10,12 +10,35 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
-        <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
-          <div className="w-full flex-none md:w-64">
-            <SideNav />
+        <div className="flex h-screen bg-gray-100">
+          <div className="hidden w-64 flex-col bg-gray-800 md:flex">
+            <div className="flex h-16 items-center justify-center bg-gray-900">
+              <span className="font-bold uppercase text-white">
+                MediaViewer
+              </span>
+            </div>
+            <div className="flex flex-1 flex-col overflow-y-auto">
+              <nav className="flex-1 bg-gray-800 px-2 py-4">
+                <a
+                  href="#"
+                  className="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700"
+                >
+                  Media 1
+                </a>
+                <a
+                  href="#"
+                  className="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700"
+                >
+                  Media 2
+                </a>
+              </nav>
+            </div>
           </div>
-          <div className="flex-grow p-6 md:overflow-y-auto md:p-12">
-            {children}
+
+          <div className="flex flex-1 flex-col overflow-y-auto">
+            <div className="p-12">
+              <div>{children}</div>
+            </div>
           </div>
         </div>
       </body>
