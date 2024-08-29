@@ -36,7 +36,7 @@ export default function NavLinks() {
               pathname: '/',
               query: { video: `${link.videoId}` },
             }}
-            className="flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3"
+            className="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700"
           >
             {/* <LinkIcon className="w-6" /> */}
             <p className="hidden md:block">{link.name}</p>
