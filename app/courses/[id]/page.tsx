@@ -1,12 +1,7 @@
-export default function CourseDetailsPage({
-  params,
-}: {
-  params: { id: string };
-}) {
-  const { id } = params;
+export default function CourseDetailsPage() {
   return (
     <>
-      <p>Course {id}</p>
+      <p>Default video page</p>
     </>
   );
 }

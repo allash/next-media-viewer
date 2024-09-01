@@ -23,7 +23,7 @@ const links = [
   { name: 'Video 3', videoId: 'c' },
 ];
 
-export default function NavLinks() {
+export default function NavLinks({ id }) {
   return (
     <>
       {links.map((link) => {
@@ -33,8 +33,8 @@ export default function NavLinks() {
           <Link
             key={link.name}
             href={{
-              pathname: '/',
-              query: { video: `${link.videoId}` },
+              pathname: `/courses/${id}/${link.videoId}`,
+              // query: { video: `${link.videoId}` },
             }}
             className="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700"
           >

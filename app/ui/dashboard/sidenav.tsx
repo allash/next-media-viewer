@@ -3,7 +3,7 @@ import NavLinks from '@/app/ui/dashboard/nav-links';
 import AcmeLogo from '@/app/ui/acme-logo';
 import { PowerIcon } from '@heroicons/react/24/outline';
 
-export default function SideNav() {
+export default function SideNav({ id }) {
   return (
     // <div className="flex h-full flex-col px-3 py-4 md:px-2">
     //   <Link
@@ -31,7 +31,7 @@ export default function SideNav() {
       </div>
       <div className="flex flex-1 flex-col overflow-y-auto">
         <nav className="flex-1 bg-gray-800 px-2 py-4">
-          <NavLinks />
+          <NavLinks id={id} />
         </nav>
       </div>
     </div>

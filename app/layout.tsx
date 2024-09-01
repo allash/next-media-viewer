@@ -11,7 +11,7 @@ export default function RootLayout({
       <body className={`${inter.className} antialiased`}>
         <div className="flex h-screen bg-gray-100">
           <div className="flex flex-1 flex-col overflow-y-auto">
-            <div className="p-12">
+            <div>
               <div>{children}</div>
             </div>
           </div>
