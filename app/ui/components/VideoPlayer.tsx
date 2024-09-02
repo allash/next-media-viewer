@@ -20,7 +20,7 @@ const VideoPlayer = () => {
     setIsMounted(true);
   }, []);
 
-  let videoSrc = `/collections/demo.mp4`;
+  let videoSrc = `filePath`;
 
   if (!isMounted) return null;
 

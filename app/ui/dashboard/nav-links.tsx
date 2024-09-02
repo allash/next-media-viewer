@@ -1,8 +1,4 @@
-import {
-  UserGroupIcon,
-  HomeIcon,
-  DocumentDuplicateIcon,
-} from '@heroicons/react/24/outline';
+import { Item } from '@/app/courses/[id]/layout';
 import Link from 'next/link';
 
 // Map of links to display in the side navigation.
@@ -23,26 +19,43 @@ const links = [
   { name: 'Video 3', videoId: 'c' },
 ];
 
-export default function NavLinks({ id }) {
-  return (
-    <>
-      {links.map((link) => {
-        // const LinkIcon = link.icon;
+export interface ItemProps {
+  id: string;
+  items: Item[];
+}
 
-        return (
-          <Link
-            key={link.name}
-            href={{
-              pathname: `/courses/${id}/${link.videoId}`,
-              // query: { video: `${link.videoId}` },
-            }}
-            className="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700"
-          >
-            {/* <LinkIcon className="w-6" /> */}
-            <p className="hidden md:block">{link.name}</p>
-          </Link>
-        );
-      })}
+const NavLinks: React.FC<ItemProps> = ({ id, items }) => {
+  const renderStructure = (items: Item[]): JSX.Element => (
+    <>
+      {items.map((item, idx) => (
+        <div key={idx}>
+          {item.type == 'directory' ? (
+            <>
+              <p
+                key={idx}
+                className="flex items-center px-4 py-2 text-blue-600"
+              >
+                {item.name}
+              </p>
+              {renderStructure(item.children!)}
+            </>
+          ) : (
+            <Link
+              key={idx}
+              href={{
+                pathname: `/courses/${id}/${item.name}`,
+              }}
+              className="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700"
+            >
+              <p className="hidden md:block">{item.name}</p>
+            </Link>
+          )}
+        </div>
+      ))}
     </>
   );
-}
+
+  return <>{renderStructure(items)}</>;
+};
+
+export default NavLinks;
