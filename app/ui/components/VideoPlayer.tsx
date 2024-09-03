@@ -20,7 +20,8 @@ const VideoPlayer = () => {
     setIsMounted(true);
   }, []);
 
-  let videoSrc = `filePath`;
+  let videoSrc = `public/collections/Super course 2/super-course/video1.mp4`;
+  console.log(videoSrc);
 
   if (!isMounted) return null;
 

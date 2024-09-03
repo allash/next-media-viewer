@@ -1,35 +1,73 @@
 import Link from 'next/link';
 import path from 'path';
 import fs from 'fs';
+import { v4 as uuidv4 } from 'uuid';
+import { Item } from './courses/[id]/layout';
 
-async function loadCourses() {
-  const dirPath = path.join(process.cwd(), 'public/collections');
-  const directories = fs
-    .readdirSync(dirPath, { withFileTypes: true })
-    .filter((dirent) => dirent.isDirectory())
-    .map((dirent) => {
-      const fullPath = path.join(dirPath, dirent.name);
-      const stat = fs.statSync(fullPath);
-      return { name: dirent.name, ctime: stat.ctime };
-    });
+// async function loadCourses() {
+//   const dirPath = path.join(process.cwd(), 'public/collections');
+//   const directories = fs
+//     .readdirSync(dirPath, { withFileTypes: true })
+//     .filter((dirent) => dirent.isDirectory())
+//     .map((dirent) => {
+//       const fullPath = path.join(dirPath, dirent.name);
+//       const stat = fs.statSync(fullPath);
+//       return { name: dirent.name, ctime: stat.ctime };
+//     });
 
-  directories.sort((a, b) => a.ctime - b.ctime);
+//   directories.sort((a, b) => a.ctime - b.ctime);
 
-  let courses = [];
-  for (var i = 0; i < directories.length; i++) {
-    courses.push({ id: i + 1, name: directories[i].name });
-  }
-  return courses;
+//   let courses = [];
+//   for (var i = 0; i < directories.length; i++) {
+//     courses.push({ id: i + 1, name: directories[i].name });
+//   }
+//   return courses;
+// }
+
+function getAllFilesAndDirectories(dirPath: string): Item[] {
+  const items = fs.readdirSync(dirPath, { withFileTypes: true });
+
+  return items.map((item): Item => {
+    const fullPath = path.join(dirPath, item.name);
+
+    if (item.isDirectory()) {
+      return {
+        id: uuidv4(),
+        name: item.name,
+        path: fullPath,
+        type: 'directory',
+        children: getAllFilesAndDirectories(fullPath),
+      };
+    } else {
+      return {
+        id: uuidv4(),
+        name: item.name,
+        path: fullPath,
+        type: 'file',
+      };
+    }
+  });
 }
 
 export default async function CoursesPage() {
-  const courses = await loadCourses();
+  const json = JSON.stringify(
+    getAllFilesAndDirectories('public/collections'),
+    null,
+    2,
+  );
+
+  const dbName = 'db.json';
+  if (!fs.existsSync(dbName)) {
+    fs.writeFileSync(dbName, json, 'utf-8');
+  }
+
+  const data = JSON.parse(fs.readFileSync(dbName, 'utf-8'));
 
   return (
     <>
       <div className="relative flex w-96 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
         <nav className="text-blue-gray-700 flex min-w-[240px] flex-col gap-1 p-2 font-sans text-base font-normal">
-          {courses.map((c) => (
+          {data.map((c: Item) => (
             <Link
               key={c.id}
               href={`/courses/${c.id}`}

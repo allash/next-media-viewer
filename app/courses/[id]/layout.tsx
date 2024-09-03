@@ -4,8 +4,10 @@ import path from 'path';
 import fs from 'fs';
 
 export interface Item {
+  id: string;
   name: string;
   type: string;
+  path?: string;
   children?: Item[];
 }
 
@@ -17,12 +19,15 @@ function getAllFilesAndDirectories(dirPath: string): Item[] {
 
     if (item.isDirectory()) {
       return {
+        id: 'test-directory',
         name: item.name,
         type: 'directory',
         children: getAllFilesAndDirectories(fullPath),
       };
     } else {
       return {
+        id: 'tsst-file',
+        path: fullPath,
         name: item.name,
         type: 'file',
       };
@@ -33,13 +38,23 @@ function getAllFilesAndDirectories(dirPath: string): Item[] {
 const renderStructure = (items: Item[]) => {
   items.map((item, index) => {
     if (item.type == 'directory') {
-      console.log('-' + item.name);
+      // console.log('-' + item.name);
       renderStructure(item.children!);
     } else {
-      console.log(item.name);
+      // console.log(item.name);
     }
   });
 };
+
+function findById(items: Item[], id: string): Item | null {
+  for (const item of items) {
+    if (item.id === id) {
+      return item;
+    }
+  }
+
+  return null;
+}
 
 export default function CourseDetailsLayout({
   children,
@@ -48,7 +63,9 @@ export default function CourseDetailsLayout({
   children: React.ReactNode;
   params: { id: string };
 }) {
-  const dirPath = path.join(process.cwd(), 'public/collections/Super course 2');
+  const data: Item[] = JSON.parse(fs.readFileSync('db.json', 'utf-8'));
+  const media = findById(data, params.id);
+  const dirPath = path.join(process.cwd(), media?.path!);
   const items = getAllFilesAndDirectories(dirPath);
 
   renderStructure(items);
