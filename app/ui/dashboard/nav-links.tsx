@@ -25,7 +25,7 @@ const NavLinks: React.FC<ItemProps> = ({ id, items }) => {
             <Link
               key={idx}
               href={{
-                pathname: `/courses/${id}/${item.name}`,
+                pathname: `/courses/${id}/${item.id}`,
               }}
               className="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700"
             >

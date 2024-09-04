@@ -1,13 +1,21 @@
 'use client';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
+import { Item } from '@/app/courses/[id]/layout';
 
-const VideoPlayer = () => {
+export interface VideoProps {
+  id: string;
+  videoId: string;
+}
+
+const VideoPlayer: React.FC<VideoProps> = (videoParams) => {
   const [isPlaying, setIsPlaying] = React.useState(true);
   const [isReady, setIsReady] = React.useState(false);
   const [isMounted, setIsMounted] = React.useState(false);
-  const playerRef = React.useRef();
+  const [videoSrc, setVideoSrc] = React.useState<Item | null>(null);
 
+  const playerRef = React.useRef();
+  const { id, videoId } = videoParams;
   const onReady = React.useCallback(() => {
     if (!isReady) {
       const timeToStart = 27 * 60 + 12.6;
@@ -20,8 +28,13 @@ const VideoPlayer = () => {
     setIsMounted(true);
   }, []);
 
-  let videoSrc = `public/collections/Super course 2/super-course/video1.mp4`;
-  console.log(videoSrc);
+  useEffect(() => {
+    fetch(`/api/media/${videoId}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setVideoSrc(data.path.replace('public', ''));
+      });
+  }, []);
 
   if (!isMounted) return null;
 

@@ -4,26 +4,6 @@ import fs from 'fs';
 import { v4 as uuidv4 } from 'uuid';
 import { Item } from './courses/[id]/layout';
 
-// async function loadCourses() {
-//   const dirPath = path.join(process.cwd(), 'public/collections');
-//   const directories = fs
-//     .readdirSync(dirPath, { withFileTypes: true })
-//     .filter((dirent) => dirent.isDirectory())
-//     .map((dirent) => {
-//       const fullPath = path.join(dirPath, dirent.name);
-//       const stat = fs.statSync(fullPath);
-//       return { name: dirent.name, ctime: stat.ctime };
-//     });
-
-//   directories.sort((a, b) => a.ctime - b.ctime);
-
-//   let courses = [];
-//   for (var i = 0; i < directories.length; i++) {
-//     courses.push({ id: i + 1, name: directories[i].name });
-//   }
-//   return courses;
-// }
-
 function getAllFilesAndDirectories(dirPath: string): Item[] {
   const items = fs.readdirSync(dirPath, { withFileTypes: true });
 
