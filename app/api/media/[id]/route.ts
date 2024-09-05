@@ -23,7 +23,6 @@ export async function GET(request: Request, context: any) {
 
   const items: Item[] = JSON.parse(fs.readFileSync('db.json', 'utf-8'));
   const item = findByIdRecursive(items, params.id);
-  console.log(item);
 
   return NextResponse.json(item);
 }

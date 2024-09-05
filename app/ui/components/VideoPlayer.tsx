@@ -4,18 +4,16 @@ import React, { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
 import { Item } from '@/models/item';
 export interface VideoProps {
-  id: string;
-  videoId: string;
+  item: Item;
 }
 
-const VideoPlayer: React.FC<VideoProps> = (videoParams) => {
+const VideoPlayer: React.FC<VideoProps> = (props) => {
   const [isPlaying, setIsPlaying] = React.useState(true);
   const [isReady, setIsReady] = React.useState(false);
   const [isMounted, setIsMounted] = React.useState(false);
-  const [videoSrc, setVideoSrc] = React.useState<Item | null>(null);
 
   const playerRef = React.useRef();
-  const { id, videoId } = videoParams;
+  const { item } = props;
   const onReady = React.useCallback(() => {
     if (!isReady) {
       const timeToStart = 7 * 60 + 12.6;
@@ -28,16 +26,9 @@ const VideoPlayer: React.FC<VideoProps> = (videoParams) => {
     setIsMounted(true);
   }, []);
 
-  useEffect(() => {
-    fetch(`/api/media/${videoId}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setVideoSrc(data.path.replace('public', ''));
-      });
-  }, []);
-
   if (!isMounted) return null;
 
+  const videoSrc = item.path.replace('public', '');
   return (
     <div>
       <ReactPlayer

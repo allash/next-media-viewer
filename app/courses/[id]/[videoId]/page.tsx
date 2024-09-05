@@ -1,16 +1,32 @@
+'use client';
+
 import VideoPlayer from '@/app/ui/components/VideoPlayer';
+import { Item } from '@/models/item';
+import React, { useEffect } from 'react';
 
 export default function VideoPage({
   params,
 }: {
   params: { id: string; videoId: string };
 }) {
+  const [data, setData] = React.useState<Item | null>(null);
   const { id, videoId } = params;
+
+  useEffect(() => {
+    fetch(`/api/media/${videoId}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data);
+      });
+  }, []);
+
+  if (data == null) return null;
+
   return (
     <>
-      <div>Video page: {videoId} </div>
+      <h1 className="mb-4 text-3xl font-bold text-blue-700">{data.name} </h1>
       <div>
-        <VideoPlayer id={id} videoId={videoId} />
+        <VideoPlayer item={data} />
       </div>
     </>
   );

@@ -6,7 +6,8 @@ export interface ItemProps {
   items: Item[];
 }
 
-const NavLinks: React.FC<ItemProps> = ({ id, items }) => {
+const NavLinks: React.FC<ItemProps> = (props) => {
+  const { id, items } = props;
   const renderStructure = (items: Item[]): JSX.Element => (
     <>
       {items.map((item, idx) => (
