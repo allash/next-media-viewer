@@ -1,14 +1,7 @@
 import '@/app/ui/global.css';
 import Sidebar from '@/app/ui/dashboard/sidebar';
 import fs from 'fs';
-
-export interface Item {
-  id: string;
-  name: string;
-  type: string;
-  path?: string;
-  children?: Item[];
-}
+import { Item } from '@/models/item';
 
 function findById(items: Item[], id: string): Item | null {
   for (const item of items) {

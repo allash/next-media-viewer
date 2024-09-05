@@ -1,13 +1,6 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs';
-
-interface Item {
-  id: string;
-  name: string;
-  type: string;
-  path?: string;
-  children?: Item[];
-}
+import { Item } from '@/models/item';
 
 function findByIdRecursive(items: Item[], id: string): Item | null {
   for (const item of items) {

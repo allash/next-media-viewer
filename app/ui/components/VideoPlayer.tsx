@@ -1,8 +1,8 @@
 'use client';
+
 import React, { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
-import { Item } from '@/app/courses/[id]/layout';
-
+import { Item } from '@/models/item';
 export interface VideoProps {
   id: string;
   videoId: string;
@@ -18,7 +18,7 @@ const VideoPlayer: React.FC<VideoProps> = (videoParams) => {
   const { id, videoId } = videoParams;
   const onReady = React.useCallback(() => {
     if (!isReady) {
-      const timeToStart = 27 * 60 + 12.6;
+      const timeToStart = 7 * 60 + 12.6;
       playerRef.current.seekTo(timeToStart, 'seconds');
       setIsReady(true);
     }

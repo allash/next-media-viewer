@@ -2,7 +2,7 @@ import Link from 'next/link';
 import path from 'path';
 import fs from 'fs';
 import { v4 as uuidv4 } from 'uuid';
-import { Item } from './courses/[id]/layout';
+import { Item } from '@/models/item';
 
 function getAllFilesAndDirectories(dirPath: string): Item[] {
   const items = fs.readdirSync(dirPath, { withFileTypes: true });

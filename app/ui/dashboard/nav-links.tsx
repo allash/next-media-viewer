@@ -1,4 +1,4 @@
-import { Item } from '@/app/courses/[id]/layout';
+import { Item } from '@/models/item';
 import Link from 'next/link';
 
 export interface ItemProps {
