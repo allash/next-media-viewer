@@ -20,15 +20,15 @@ export default function CourseDetailsLayout({
   children: React.ReactNode;
   params: { id: string };
 }) {
-  const data: Item[] = JSON.parse(fs.readFileSync('db.json', 'utf-8'));
-  const media = findById(data, params.id);
+  const items: Item[] = JSON.parse(fs.readFileSync('db.json', 'utf-8'));
+  const item = findById(items, params.id);
 
   const { id } = params;
 
   return (
     <>
       <div className="flex h-screen bg-gray-100">
-        <Sidebar id={id} items={media?.children!} />
+        <Sidebar id={id} items={item?.children!} />
 
         <div className="flex flex-1 flex-col overflow-y-auto">
           <div className="p-12">

@@ -17,8 +17,7 @@ const VideoPlayer: React.FC<VideoProps> = (props) => {
   const { item } = props;
   const onReady = React.useCallback(() => {
     if (!isReady) {
-      const timeToStart = 7 * 60 + 12.6;
-      playerRef.current.seekTo(timeToStart, 'seconds');
+      playerRef.current.seekTo(item.timestamp, 'seconds');
       setIsReady(true);
     }
   }, [isReady]);

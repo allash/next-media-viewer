@@ -3,5 +3,6 @@ export interface Item {
   name: string;
   type: string;
   path?: string;
+  timestamp?: number;
   children?: Item[];
 }
