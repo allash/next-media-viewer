@@ -18,6 +18,14 @@ export default function CoursesPage() {
     fetch(`/api/media`)
       .then((res) => res.json())
       .then((data) => {
+        setCourses(data);
+      });
+  }, []);
+
+  useEffect(() => {
+    fetch(`/api/media/scan`)
+      .then((res) => res.json())
+      .then((data) => {
         setSyncCourses(data);
       });
   }, []);
@@ -26,10 +34,10 @@ export default function CoursesPage() {
     setIsModalOpen(true);
   };
 
-  const handleCheckboxChange = (courseId: string) => {
+  const handleCheckboxChange = (courseName: string) => {
     setSyncCourses((prevCourses) =>
       prevCourses.map((course) =>
-        course.id === courseId
+        course.name === courseName
           ? { ...course, isChecked: !course.isChecked }
           : course,
       ),
@@ -41,6 +49,25 @@ export default function CoursesPage() {
 
     console.log('Selected Courses for Sync:', selectedCourses);
     setCourses(selectedCourses);
+
+    const requestOptions = {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(selectedCourses.map((e) => e.name)),
+    };
+
+    fetch('/api/media/sync', requestOptions)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('Data synced');
+
+        fetch(`/api/media`)
+          .then((res) => res.json())
+          .then((data) => {
+            setCourses(data);
+          });
+      });
+
     setIsModalOpen(false);
   };
 
@@ -111,7 +138,7 @@ export default function CoursesPage() {
                         <input
                           type="checkbox"
                           checked={course.isChecked}
-                          onChange={() => handleCheckboxChange(course.id)}
+                          onChange={() => handleCheckboxChange(course.name)}
                         />
                       </td>
                       <td className="px-4 py-2">{course.name}</td>
