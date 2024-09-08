@@ -22,16 +22,20 @@ export default function CoursesPage() {
       });
   }, []);
 
-  useEffect(() => {
+  const handleSync = () => {
     fetch(`/api/media/scan`)
       .then((res) => res.json())
-      .then((data) => {
-        setSyncCourses(data);
-      });
-  }, []);
+      .then((data: SyncItem[]) => {
+        for (let i = 0; i < data.length; i++) {
+          if (courses.some((e) => e.name == data[i].name)) {
+            data[i].isChecked = true;
+          }
+        }
 
-  const handleSync = () => {
-    setIsModalOpen(true);
+        setSyncCourses(data);
+
+        setIsModalOpen(true);
+      });
   };
 
   const handleCheckboxChange = (courseName: string) => {
@@ -48,7 +52,6 @@ export default function CoursesPage() {
     const selectedCourses = syncCourses.filter((course) => course.isChecked);
 
     console.log('Selected Courses for Sync:', selectedCourses);
-    setCourses(selectedCourses);
 
     const requestOptions = {
       method: 'PUT',
@@ -58,7 +61,7 @@ export default function CoursesPage() {
 
     fetch('/api/media/sync', requestOptions)
       .then((res) => res.json())
-      .then((data) => {
+      .then(() => {
         console.log('Data synced');
 
         fetch(`/api/media`)
@@ -69,10 +72,6 @@ export default function CoursesPage() {
       });
 
     setIsModalOpen(false);
-  };
-
-  const handleDelete = (courseId: string) => {
-    setCourses(courses.filter((course) => course.id !== courseId));
   };
 
   return (
@@ -91,7 +90,6 @@ export default function CoursesPage() {
           <thead>
             <tr>
               <th className="px-4 py-2 text-left">Name</th>
-              <th className="px-4 py-2 text-left">Delete</th>
             </tr>
           </thead>
           <tbody>
@@ -105,14 +103,6 @@ export default function CoursesPage() {
                   >
                     {course.name}
                   </Link>
-                </td>
-                <td className="px-4 py-2">
-                  <button
-                    className="text-red-500"
-                    onClick={() => handleDelete(course.id)}
-                  >
-                    Delete
-                  </button>
                 </td>
               </tr>
             ))}
@@ -133,11 +123,11 @@ export default function CoursesPage() {
                 </thead>
                 <tbody>
                   {syncCourses.map((course) => (
-                    <tr key={course.id} className="border-t">
+                    <tr key={course.name} className="border-t">
                       <td className="px-4 py-2">
                         <input
                           type="checkbox"
-                          checked={course.isChecked}
+                          checked={course.isChecked || false}
                           onChange={() => handleCheckboxChange(course.name)}
                         />
                       </td>
