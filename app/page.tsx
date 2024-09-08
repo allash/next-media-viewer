@@ -77,14 +77,16 @@ export default function CoursesPage() {
   return (
     <>
       <div className="container mx-auto p-4">
-        <h1 className="mb-4 text-2xl font-bold">Courses</h1>
+        <div className="mb-4 flex items-center justify-between">
+          <h1 className="mb-4 text-2xl font-bold">MediaViewer</h1>
 
-        <button
-          className="mb-4 rounded bg-blue-500 px-4 py-2 text-white"
-          onClick={handleSync}
-        >
-          Sync
-        </button>
+          <button
+            className="mb-4 rounded bg-blue-500 px-4 py-2 text-white"
+            onClick={handleSync}
+          >
+            Sync
+          </button>
+        </div>
 
         <table className="min-w-full overflow-hidden rounded-lg bg-white shadow-md">
           <thead>
@@ -99,7 +101,7 @@ export default function CoursesPage() {
                   <Link
                     key={course.id}
                     href={`/courses/${course.id}`}
-                    className="hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:text-blue-gray-900 active:bg-blue-gray-50 active:text-blue-gray-900 flex w-full items-center rounded-lg p-3 text-start leading-tight outline-none transition-all hover:bg-blue-700 hover:bg-opacity-80 focus:bg-opacity-80 active:bg-opacity-80"
+                    className="focus:bg-blue-gray-50 focus:text-blue-gray-900 active:bg-blue-gray-50 active:text-blue-gray-900 flex w-full items-center rounded-lg p-3 text-start leading-tight outline-none transition-all hover:bg-gray-100 hover:bg-opacity-80 hover:text-gray-700 focus:bg-opacity-80 active:bg-opacity-80"
                   >
                     {course.name}
                   </Link>
