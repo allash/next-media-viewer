@@ -1,5 +1,7 @@
 import { Item } from '@/models/item';
 import Link from 'next/link';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFolder, faPhotoVideo } from '@fortawesome/free-solid-svg-icons';
 
 export interface ItemProps {
   id: string;
@@ -19,7 +21,7 @@ const NavLinks: React.FC<ItemProps> = (props) => {
                 className="flex items-center px-4 py-2 text-gray-800"
                 style={{ paddingLeft: `${depth * 20}px` }}
               >
-                <span>📁 </span>
+                <FontAwesomeIcon icon={faFolder} className="text-yellow-500" />
                 <span className="pl-2">{item.name}</span>
               </p>
               {renderStructure(item.children!, depth + 1)}
@@ -34,7 +36,10 @@ const NavLinks: React.FC<ItemProps> = (props) => {
               style={{ paddingLeft: `${depth * 20}px` }}
             >
               <p className="hidden md:block">
-                <span>🎥 </span>
+                <FontAwesomeIcon
+                  icon={faPhotoVideo}
+                  className="text-blue-400"
+                />
                 <span className="pl-2">
                   {item.name.replace(/\.[^/.]+$/, '')}
                 </span>

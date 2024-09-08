@@ -8,14 +8,12 @@ const dbName = 'db.json';
 export async function PUT(request: NextRequest, context: any) {
   let mediaFileNames: string[] = await request.json();
 
-  const items: Item[] = getAllFilesAndDirectories('public/collections');
-  for (let i = 0; i < items.length; i++) {
-    if (!mediaFileNames.includes(items[i].name)) {
-      items.splice(i, 1);
-    }
-  }
+  let items: Item[] = getAllFilesAndDirectories('public/collections');
+  let filteredItems = items.filter((item) =>
+    mediaFileNames.includes(item.name),
+  );
 
-  fs.writeFileSync(dbName, JSON.stringify(items, null, 2), 'utf-8');
+  fs.writeFileSync(dbName, JSON.stringify(filteredItems, null, 2), 'utf-8');
 
   return NextResponse.json('');
 }
