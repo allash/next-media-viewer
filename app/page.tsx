@@ -78,7 +78,7 @@ export default function CoursesPage() {
     <>
       <div className="container mx-auto p-4">
         <div className="mb-4 flex items-center justify-between">
-          <h1 className="mb-4 text-2xl font-bold">MediaViewer</h1>
+          <h1 className="mb-4 text-2xl font-bold text-gray-700">MediaViewer</h1>
 
           <button
             className="mb-4 rounded bg-blue-500 px-4 py-2 text-white"

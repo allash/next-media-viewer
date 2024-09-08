@@ -6,7 +6,7 @@ const Sidebar: React.FC<ItemProps> = ({ id, items }) => {
   return (
     <div className="hidden w-96 flex-col bg-gray-100 md:flex">
       <div className="flex h-16 items-center justify-center bg-gray-300 ">
-        <Link href={'/'} className="font-bold uppercase text-gray-900">
+        <Link href={'/'} className="font-bold uppercase text-gray-700">
           MediaViewer
         </Link>
       </div>
