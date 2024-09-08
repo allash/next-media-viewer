@@ -24,8 +24,10 @@ export default function VideoPage({
 
   return (
     <>
-      <h1 className="mb-4 text-3xl font-bold text-blue-700">{data.name} </h1>
-      <div>
+      <h1 className="mb-4 text-2xl font-bold text-gray-700">
+        {data.name.replace(/\.[^/.]+$/, '')}
+      </h1>
+      <div className="mt-10">
         <VideoPlayer item={data} />
       </div>
     </>

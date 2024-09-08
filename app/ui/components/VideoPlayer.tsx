@@ -67,8 +67,8 @@ const VideoPlayer: React.FC<VideoProps> = (props) => {
     <div>
       <ReactPlayer
         ref={playerRef}
-        width={500}
-        height={400}
+        width={'100%'}
+        height={'100%'}
         url={videoSrc}
         controls={true}
         light={false}
