@@ -1,7 +1,11 @@
+'use client';
+
 import { Item } from '@/models/item';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFolder, faPhotoVideo } from '@fortawesome/free-solid-svg-icons';
+
+import { useSelectedLayoutSegment } from 'next/navigation';
 
 export interface ItemProps {
   id: string;
@@ -9,6 +13,8 @@ export interface ItemProps {
 }
 
 const NavLinks: React.FC<ItemProps> = (props) => {
+  const activeSegment = useSelectedLayoutSegment();
+
   const { id, items } = props;
   const renderStructure = (items: Item[], depth = 0): JSX.Element => (
     <>
@@ -32,7 +38,9 @@ const NavLinks: React.FC<ItemProps> = (props) => {
               href={{
                 pathname: `/courses/${id}/${item.id}`,
               }}
-              className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-300"
+              className={`flex items-center px-4 py-2 text-gray-800 hover:bg-gray-300 ${
+                activeSegment == item.id ? 'bg-gray-300' : null
+              }`}
               style={{ paddingLeft: `${depth * 20}px` }}
             >
               <p className="hidden md:block">
