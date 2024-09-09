@@ -36,5 +36,6 @@ yarn-error.log*
 next-env.d.ts
 
 # public
-/public/collections
+/public/collections/**
+!/public/collections/.gitkeep
 db.json

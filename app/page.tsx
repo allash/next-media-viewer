@@ -84,7 +84,7 @@ export default function CoursesPage() {
             className="mb-4 rounded bg-blue-500 px-4 py-2 text-white"
             onClick={handleSync}
           >
-            Sync
+            Scan
           </button>
         </div>
 
@@ -150,7 +150,7 @@ export default function CoursesPage() {
                   className="rounded bg-blue-500 px-4 py-2 text-white"
                   onClick={handleSave}
                 >
-                  Save
+                  Sync
                 </button>
               </div>
             </div>
