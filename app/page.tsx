@@ -114,13 +114,13 @@ export default function CoursesPage() {
         {isModalOpen && (
           <div className="fixed inset-0 flex items-center justify-center bg-gray-600 bg-opacity-50">
             <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-lg">
-              <h2 className="mb-4 text-xl font-bold">Sync Courses</h2>
+              <h2 className="mb-4 text-xl font-bold">Sync Media Files</h2>
 
               <table className="min-w-full overflow-hidden rounded-lg bg-white shadow-md">
                 <thead>
                   <tr>
                     <th className="px-4 py-2 text-left">Select</th>
-                    <th className="px-4 py-2 text-left">Course Name</th>
+                    <th className="px-4 py-2 text-left">Name</th>
                   </tr>
                 </thead>
                 <tbody>

@@ -13,12 +13,14 @@ const VideoPlayer: React.FC<VideoProps> = (props) => {
   const [isReady, setIsReady] = React.useState(false);
   const [isMounted, setIsMounted] = React.useState(false);
 
-  const playerRef = React.useRef();
+  const playerRef = React.useRef<any>();
   const { item } = props;
   const onReady = React.useCallback(() => {
     if (!isReady) {
-      playerRef.current.seekTo(item.timestamp || 0, 'seconds');
-      setIsReady(true);
+      if (playerRef.current != undefined) {
+        playerRef.current.seekTo(item.timestamp || 0, 'seconds');
+        setIsReady(true);
+      }
     }
   }, [isReady]);
 
@@ -50,7 +52,7 @@ const VideoPlayer: React.FC<VideoProps> = (props) => {
           setPlayedSeconds(currentTime);
           updateVideoProgress(currentTime);
         }
-      }, 2000);
+      }, 1000);
     } else if (!isPlaying && interval) {
       clearInterval(interval);
     }
@@ -62,7 +64,7 @@ const VideoPlayer: React.FC<VideoProps> = (props) => {
 
   if (!isMounted) return null;
 
-  const videoSrc = item.path.replace('public', '');
+  const videoSrc = item.path?.replace('public', '');
   return (
     <div>
       <ReactPlayer
