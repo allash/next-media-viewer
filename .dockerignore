@@ -1,0 +1,8 @@
+db.json
+.git
+.gitignore
+Dockerfile
+build.sh
+.DS_Store
+.nvmrc
+.dockerignore
