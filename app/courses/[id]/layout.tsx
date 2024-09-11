@@ -1,8 +1,8 @@
 import '@/app/ui/global.css';
-import Sidebar from '@/app/ui/dashboard/sidebar';
 import { FileItem } from '@/models/fileItem';
 import findFileItems from '@/lib/findFileItems';
 import findFileItemById from '@/lib/findFileItemById';
+import Sidebar from '@/app/ui/dashboard/Sidebar';
 
 export default function CourseDetailsLayout({
   children,
@@ -19,7 +19,11 @@ export default function CourseDetailsLayout({
   return (
     <>
       <div className="flex h-screen bg-gray-100">
-        <Sidebar id={id} fileItems={fileItem?.children!} />
+        <Sidebar
+          id={id}
+          name={fileItem?.name}
+          fileItems={fileItem?.children!}
+        />
 
         <div className="flex flex-1 flex-col overflow-y-auto">
           <div className="p-12">

@@ -4,5 +4,6 @@ export interface FileItem {
   type: string;
   path?: string;
   timestamp?: number;
+  percentage?: number;
   children?: FileItem[];
 }

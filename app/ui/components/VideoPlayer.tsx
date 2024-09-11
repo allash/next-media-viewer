@@ -1,7 +1,7 @@
 'use client';
 
 import { FileItem } from '@/models/fileItem';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import ReactPlayer from 'react-player';
 
 type VideoPlayerProps = {
@@ -10,7 +10,6 @@ type VideoPlayerProps = {
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({ fileItem }) => {
   const [isPlaying, setIsPlaying] = React.useState(true);
-  const [, setPlayedSeconds] = useState<number>();
   const [isReady, setIsReady] = React.useState(false);
   const [isMounted, setIsMounted] = React.useState(false);
 
@@ -31,14 +30,17 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ fileItem }) => {
   useEffect(() => {
     let interval: NodeJS.Timeout | null = null;
 
-    const updateVideoProgress = async (timestamp: number) => {
+    const updateVideoProgress = async (
+      timestamp: number,
+      percentage: number,
+    ) => {
       try {
         await fetch(`/api/media/${fileItem.id}/progress`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ timestamp }),
+          body: JSON.stringify({ timestamp, percentage }),
         });
       } catch (error) {
         console.log('Error sending timestamp: ', timestamp);
@@ -49,8 +51,9 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ fileItem }) => {
       interval = setInterval(() => {
         if (playerRef.current) {
           const currentTime = playerRef.current.getCurrentTime();
-          setPlayedSeconds(currentTime);
-          updateVideoProgress(currentTime);
+          const duration = playerRef.current.getDuration();
+          const percentage = (currentTime * 100) / duration;
+          updateVideoProgress(currentTime, Math.floor(percentage));
         }
       }, 1000);
     } else if (!isPlaying && interval) {

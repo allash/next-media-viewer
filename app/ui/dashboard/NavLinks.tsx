@@ -7,6 +7,7 @@ import { faFolder, faPhotoVideo } from '@fortawesome/free-solid-svg-icons';
 import { useSelectedLayoutSegment } from 'next/navigation';
 import { FileItem } from '@/models/fileItem';
 import removeFileExtension from '@/lib/helpers/removeFileExtension';
+import ProgressCircle from '../components/ProgressCircle';
 
 type NavLinksProps = {
   id: string;
@@ -38,18 +39,19 @@ const NavLinks: React.FC<NavLinksProps> = ({ id, fileItems }) => {
               href={{
                 pathname: `/courses/${id}/${item.id}`,
               }}
-              className={`flex items-center px-4 py-2 text-gray-800 hover:bg-gray-300 ${
-                activeSegment == item.id ? 'bg-gray-300' : null
+              className={`flex items-center px-4 py-2 text-gray-800 hover:bg-slate-50 ${
+                activeSegment == item.id ? 'bg-slate-50' : null
               }`}
               style={{ paddingLeft: `${depth * 20}px` }}
             >
-              <p className="hidden md:block">
-                <FontAwesomeIcon
-                  icon={faPhotoVideo}
-                  className="text-blue-400"
-                />
-                <span className="pl-2">{removeFileExtension(item.name)}</span>
-              </p>
+              <div className="relative pt-1">
+                <ProgressCircle progress={item.percentage} />
+              </div>
+              <FontAwesomeIcon
+                icon={faPhotoVideo}
+                className="ml-2 text-blue-400"
+              />
+              <span className="pl-2">{removeFileExtension(item.name)}</span>
             </Link>
           )}
         </div>

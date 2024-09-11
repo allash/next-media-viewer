@@ -6,12 +6,13 @@ import findFileItemById from '@/lib/findFileItemById';
 
 export async function POST(request: Request, context: any) {
   const { params } = context;
-  const { timestamp } = await request.json();
+  const { timestamp, percentage } = await request.json();
 
   const items: FileItem[] = findFileItems();
   const item = findFileItemById(items, params.id);
   if (item != null) {
     item.timestamp = timestamp;
+    item.percentage = percentage;
     updateFileItemById(items, params.id, item);
   }
 
