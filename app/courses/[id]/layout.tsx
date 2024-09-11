@@ -1,17 +1,8 @@
 import '@/app/ui/global.css';
 import Sidebar from '@/app/ui/dashboard/sidebar';
-import fs from 'fs';
-import { Item } from '@/models/item';
-
-function findById(items: Item[], id: string): Item | null {
-  for (const item of items) {
-    if (item.id === id) {
-      return item;
-    }
-  }
-
-  return null;
-}
+import findById from '@/lib/findById';
+import { FileItem } from '@/models/fileItem';
+import findFileItems from '@/lib/findFileItems';
 
 export default function CourseDetailsLayout({
   children,
@@ -20,7 +11,7 @@ export default function CourseDetailsLayout({
   children: React.ReactNode;
   params: { id: string };
 }) {
-  const items: Item[] = JSON.parse(fs.readFileSync('db.json', 'utf-8'));
+  const items: FileItem[] = findFileItems();
   const item = findById(items, params.id);
 
   const { id } = params;

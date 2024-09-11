@@ -1,7 +1,7 @@
+import { FileItem } from '@/models/fileItem';
 import fs from 'fs';
 import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
-import { Item } from '@/models/item';
 
 const videoFormats = [
   'mp4',
@@ -20,10 +20,12 @@ function isVideoFile(file: string): boolean {
   return fileExtension != undefined && videoFormats.includes(fileExtension);
 }
 
-export default function getAllFilesAndDirectories(dirPath: string): Item[] {
+export default function findAllFilesAndDirectories(
+  dirPath: string,
+): FileItem[] {
   const files = fs.readdirSync(dirPath, { withFileTypes: true });
 
-  const result: Item[] = [];
+  const result: FileItem[] = [];
 
   files.forEach((file) => {
     const fullPath = path.join(dirPath, file.name);
@@ -33,7 +35,7 @@ export default function getAllFilesAndDirectories(dirPath: string): Item[] {
         name: file.name,
         path: fullPath,
         type: 'directory',
-        children: getAllFilesAndDirectories(fullPath),
+        children: findAllFilesAndDirectories(fullPath),
       });
     } else if (file.isFile() && isVideoFile(file.name)) {
       result.push({

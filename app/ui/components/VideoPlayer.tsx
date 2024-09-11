@@ -1,15 +1,16 @@
 'use client';
 
+import { FileItem } from '@/models/fileItem';
 import React, { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
-import { Item } from '@/models/item';
-export interface VideoProps {
-  item: Item;
-}
 
-const VideoPlayer: React.FC<VideoProps> = (props) => {
+type VideoPlayerProps = {
+  item: FileItem;
+};
+
+const VideoPlayer: React.FC<VideoPlayerProps> = (props) => {
   const [isPlaying, setIsPlaying] = React.useState(true);
-  const [playedSeconds, setPlayedSeconds] = useState<number>();
+  const [, setPlayedSeconds] = useState<number>();
   const [isReady, setIsReady] = React.useState(false);
   const [isMounted, setIsMounted] = React.useState(false);
 
@@ -80,7 +81,7 @@ const VideoPlayer: React.FC<VideoProps> = (props) => {
         onPause={() => setIsPlaying(false)}
         onEnded={() => setIsPlaying(false)}
         onReady={onReady}
-        onSeek={(e) => console.log('onSeek', e)}
+        // onSeek={(e) => console.log('onSeek', e)}
       />
       <source src={videoSrc} type="video/mp4" />
     </div>

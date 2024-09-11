@@ -1,7 +1,7 @@
 'use client';
 
 import VideoPlayer from '@/app/ui/components/VideoPlayer';
-import { Item } from '@/models/item';
+import { FileItem } from '@/models/fileItem';
 import React, { useEffect } from 'react';
 
 export default function VideoPage({
@@ -9,8 +9,8 @@ export default function VideoPage({
 }: {
   params: { id: string; videoId: string };
 }) {
-  const [data, setData] = React.useState<Item | null>(null);
-  const { id, videoId } = params;
+  const [data, setData] = React.useState<FileItem | null>(null);
+  const { videoId } = params;
 
   useEffect(() => {
     fetch(`/api/media/${videoId}`)

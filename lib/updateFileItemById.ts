@@ -1,9 +1,9 @@
-import { Item } from '@/models/item';
+import { FileItem } from '@/models/fileItem';
 
-export default function updateById(
-  items: Item[],
+export default function updateFileItemById(
+  items: FileItem[],
   id: string,
-  updatedItem: Item,
+  updatedItem: FileItem,
 ): boolean {
   for (let i = 0; i < items.length; i++) {
     if (items[i].id === id) {
@@ -12,7 +12,7 @@ export default function updateById(
     }
 
     if (items[i].children && items[i].children!.length > 0) {
-      const found = updateById(items[i].children!, id, updatedItem);
+      const found = updateFileItemById(items[i].children!, id, updatedItem);
       if (found) return true;
     }
   }

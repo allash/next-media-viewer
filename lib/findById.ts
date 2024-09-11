@@ -1,6 +1,9 @@
-import { Item } from '@/models/item';
+import { FileItem } from '@/models/fileItem';
 
-export default function findById(items: Item[], id: string): Item | null {
+export default function findById(
+  items: FileItem[],
+  id: string,
+): FileItem | null {
   for (const item of items) {
     if (item.id === id) {
       return item;

@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { FileInfo } from '@/models/fileInfo';
 
-export default function findFiles(dirPath: string): FileInfo[] {
+export default function findFileInfos(dirPath: string): FileInfo[] {
   const items = fs.readdirSync(dirPath, { withFileTypes: true });
 
   return items.map((item): FileInfo => {

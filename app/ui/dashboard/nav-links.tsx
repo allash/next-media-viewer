@@ -1,22 +1,22 @@
 'use client';
 
-import { Item } from '@/models/item';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFolder, faPhotoVideo } from '@fortawesome/free-solid-svg-icons';
 
 import { useSelectedLayoutSegment } from 'next/navigation';
+import { FileItem } from '@/models/fileItem';
 
-export interface ItemProps {
+type NavLinksProps = {
   id: string;
-  items: Item[];
-}
+  items: FileItem[];
+};
 
-const NavLinks: React.FC<ItemProps> = (props) => {
+const NavLinks: React.FC<NavLinksProps> = (props) => {
   const activeSegment = useSelectedLayoutSegment();
 
   const { id, items } = props;
-  const renderStructure = (items: Item[], depth = 0): JSX.Element => (
+  const renderStructure = (items: FileItem[], depth = 0): JSX.Element => (
     <>
       {items.map((item, idx) => (
         <div key={idx}>

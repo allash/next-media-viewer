@@ -2,17 +2,13 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-
-interface SyncItem {
-  id: string;
-  name: string;
-  isChecked: boolean;
-}
+import ScanFilesModal from './ui/components/ScanFilesModal';
+import { ScanItem } from '@/models/scanItem';
 
 export default function CoursesPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [courses, setCourses] = useState<SyncItem[]>([]);
-  const [syncCourses, setSyncCourses] = useState<SyncItem[]>([]);
+  const [courses, setCourses] = useState<ScanItem[]>([]);
+  const [syncCourses, setSyncCourses] = useState<ScanItem[]>([]);
 
   useEffect(() => {
     fetch(`/api/media`)
@@ -25,7 +21,7 @@ export default function CoursesPage() {
   const handleSync = () => {
     fetch(`/api/media/scan`)
       .then((res) => res.json())
-      .then((data: SyncItem[]) => {
+      .then((data: ScanItem[]) => {
         for (let i = 0; i < data.length; i++) {
           if (courses.some((e) => e.name == data[i].name)) {
             data[i].isChecked = true;
@@ -50,8 +46,6 @@ export default function CoursesPage() {
 
   const handleSave = () => {
     const selectedCourses = syncCourses.filter((course) => course.isChecked);
-
-    console.log('Selected Courses for Sync:', selectedCourses);
 
     const requestOptions = {
       method: 'PUT',
@@ -112,49 +106,12 @@ export default function CoursesPage() {
         </table>
 
         {isModalOpen && (
-          <div className="fixed inset-0 flex items-center justify-center bg-gray-600 bg-opacity-50">
-            <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-lg">
-              <h2 className="mb-4 text-xl font-bold">Sync Media Files</h2>
-
-              <table className="min-w-full overflow-hidden rounded-lg bg-white shadow-md">
-                <thead>
-                  <tr>
-                    <th className="px-4 py-2 text-left">Select</th>
-                    <th className="px-4 py-2 text-left">Name</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {syncCourses.map((course) => (
-                    <tr key={course.name} className="border-t">
-                      <td className="px-4 py-2">
-                        <input
-                          type="checkbox"
-                          checked={course.isChecked || false}
-                          onChange={() => handleCheckboxChange(course.name)}
-                        />
-                      </td>
-                      <td className="px-4 py-2">{course.name}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-
-              <div className="mt-4 flex justify-end">
-                <button
-                  className="mr-2 rounded bg-gray-500 px-4 py-2 text-white"
-                  onClick={() => setIsModalOpen(false)}
-                >
-                  Close
-                </button>
-                <button
-                  className="rounded bg-blue-500 px-4 py-2 text-white"
-                  onClick={handleSave}
-                >
-                  Sync
-                </button>
-              </div>
-            </div>
-          </div>
+          <ScanFilesModal
+            syncCourses={syncCourses}
+            handleCheckboxChange={handleCheckboxChange}
+            handleSave={handleSave}
+            setIsModalOpen={setIsModalOpen}
+          />
         )}
       </div>
     </>

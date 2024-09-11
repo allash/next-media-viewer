@@ -1,8 +1,14 @@
-import NavLinks, { ItemProps } from '@/app/ui/dashboard/nav-links';
+import NavLinks from '@/app/ui/dashboard/nav-links';
+import { FileItem } from '@/models/fileItem';
 import Link from 'next/link';
 import React from 'react';
 
-const Sidebar: React.FC<ItemProps> = ({ id, items }) => {
+type SidebarProps = {
+  id: string;
+  items: FileItem[];
+};
+
+const Sidebar: React.FC<SidebarProps> = ({ id, items }) => {
   return (
     <div className="hidden w-96 flex-col bg-gray-100 md:flex">
       <div className="flex h-16 items-center justify-center bg-gray-300 ">
