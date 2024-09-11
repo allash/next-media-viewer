@@ -1,6 +1,6 @@
 import { FileItem } from '@/models/fileItem';
 
-export default function findById(
+export default function findFileItemById(
   items: FileItem[],
   id: string,
 ): FileItem | null {
@@ -10,7 +10,7 @@ export default function findById(
     }
 
     const foundInChildren =
-      item.children != undefined ? findById(item.children!, id) : null;
+      item.children != undefined ? findFileItemById(item.children!, id) : null;
     if (foundInChildren) {
       return foundInChildren;
     }

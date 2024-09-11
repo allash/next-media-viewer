@@ -1,6 +1,7 @@
 import { FileItem } from '@/models/fileItem';
+import saveFileItems from './saveFileItems';
 
-export default function updateFileItemById(
+function updateFileItem(
   items: FileItem[],
   id: string,
   updatedItem: FileItem,
@@ -12,9 +13,18 @@ export default function updateFileItemById(
     }
 
     if (items[i].children && items[i].children!.length > 0) {
-      const found = updateFileItemById(items[i].children!, id, updatedItem);
+      const found = updateFileItem(items[i].children!, id, updatedItem);
       if (found) return true;
     }
   }
   return false;
+}
+
+export default function updateFileItemById(
+  items: FileItem[],
+  id: string,
+  updatedItem: FileItem,
+) {
+  updateFileItem(items, id, updatedItem);
+  saveFileItems(items);
 }

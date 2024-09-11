@@ -6,19 +6,19 @@ import { faFolder, faPhotoVideo } from '@fortawesome/free-solid-svg-icons';
 
 import { useSelectedLayoutSegment } from 'next/navigation';
 import { FileItem } from '@/models/fileItem';
+import removeFileExtension from '@/lib/helpers/removeFileExtension';
 
 type NavLinksProps = {
   id: string;
-  items: FileItem[];
+  fileItems: FileItem[];
 };
 
-const NavLinks: React.FC<NavLinksProps> = (props) => {
+const NavLinks: React.FC<NavLinksProps> = ({ id, fileItems }) => {
   const activeSegment = useSelectedLayoutSegment();
 
-  const { id, items } = props;
-  const renderStructure = (items: FileItem[], depth = 0): JSX.Element => (
+  const renderStructure = (fileItems: FileItem[], depth = 0): JSX.Element => (
     <>
-      {items.map((item, idx) => (
+      {fileItems.map((item, idx) => (
         <div key={idx}>
           {item.type == 'directory' ? (
             <>
@@ -48,9 +48,7 @@ const NavLinks: React.FC<NavLinksProps> = (props) => {
                   icon={faPhotoVideo}
                   className="text-blue-400"
                 />
-                <span className="pl-2">
-                  {item.name.replace(/\.[^/.]+$/, '')}
-                </span>
+                <span className="pl-2">{removeFileExtension(item.name)}</span>
               </p>
             </Link>
           )}
@@ -59,7 +57,7 @@ const NavLinks: React.FC<NavLinksProps> = (props) => {
     </>
   );
 
-  return <>{renderStructure(items)}</>;
+  return <>{renderStructure(fileItems)}</>;
 };
 
 export default NavLinks;

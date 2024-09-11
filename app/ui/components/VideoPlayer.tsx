@@ -5,21 +5,20 @@ import React, { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
 
 type VideoPlayerProps = {
-  item: FileItem;
+  fileItem: FileItem;
 };
 
-const VideoPlayer: React.FC<VideoPlayerProps> = (props) => {
+const VideoPlayer: React.FC<VideoPlayerProps> = ({ fileItem }) => {
   const [isPlaying, setIsPlaying] = React.useState(true);
   const [, setPlayedSeconds] = useState<number>();
   const [isReady, setIsReady] = React.useState(false);
   const [isMounted, setIsMounted] = React.useState(false);
 
   const playerRef = React.useRef<any>();
-  const { item } = props;
   const onReady = React.useCallback(() => {
     if (!isReady) {
       if (playerRef.current != undefined) {
-        playerRef.current.seekTo(item.timestamp || 0, 'seconds');
+        playerRef.current.seekTo(fileItem.timestamp || 0, 'seconds');
         setIsReady(true);
       }
     }
@@ -34,7 +33,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = (props) => {
 
     const updateVideoProgress = async (timestamp: number) => {
       try {
-        await fetch(`/api/media/${item.id}/progress`, {
+        await fetch(`/api/media/${fileItem.id}/progress`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -61,11 +60,11 @@ const VideoPlayer: React.FC<VideoPlayerProps> = (props) => {
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, [isPlaying, item.id]);
+  }, [isPlaying, fileItem.id]);
 
   if (!isMounted) return null;
 
-  const videoSrc = item.path?.replace('public', '');
+  const videoSrc = fileItem.path;
   return (
     <div>
       <ReactPlayer

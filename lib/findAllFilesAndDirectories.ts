@@ -29,11 +29,13 @@ export default function findAllFilesAndDirectories(
 
   files.forEach((file) => {
     const fullPath = path.join(dirPath, file.name);
+    const pathWithoutPublicDirectory = fullPath.replace('public', '');
+
     if (file.isDirectory()) {
       result.push({
         id: uuidv4(),
         name: file.name,
-        path: fullPath,
+        path: pathWithoutPublicDirectory,
         type: 'directory',
         children: findAllFilesAndDirectories(fullPath),
       });
@@ -41,7 +43,7 @@ export default function findAllFilesAndDirectories(
       result.push({
         id: uuidv4(),
         name: file.name,
-        path: fullPath,
+        path: pathWithoutPublicDirectory,
         type: 'file',
       });
     }

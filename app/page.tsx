@@ -7,14 +7,14 @@ import { ScanItem } from '@/models/scanItem';
 
 export default function CoursesPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [courses, setCourses] = useState<ScanItem[]>([]);
-  const [syncCourses, setSyncCourses] = useState<ScanItem[]>([]);
+  const [scanItems, setScanItems] = useState<ScanItem[]>([]);
+  const [syncItems, setSyncItems] = useState<ScanItem[]>([]);
 
   useEffect(() => {
     fetch(`/api/media`)
       .then((res) => res.json())
       .then((data) => {
-        setCourses(data);
+        setScanItems(data);
       });
   }, []);
 
@@ -23,19 +23,19 @@ export default function CoursesPage() {
       .then((res) => res.json())
       .then((data: ScanItem[]) => {
         for (let i = 0; i < data.length; i++) {
-          if (courses.some((e) => e.name == data[i].name)) {
+          if (scanItems.some((e) => e.name == data[i].name)) {
             data[i].isChecked = true;
           }
         }
 
-        setSyncCourses(data);
+        setSyncItems(data);
 
         setIsModalOpen(true);
       });
   };
 
   const handleCheckboxChange = (courseName: string) => {
-    setSyncCourses((prevCourses) =>
+    setSyncItems((prevCourses) =>
       prevCourses.map((course) =>
         course.name === courseName
           ? { ...course, isChecked: !course.isChecked }
@@ -45,7 +45,7 @@ export default function CoursesPage() {
   };
 
   const handleSave = () => {
-    const selectedCourses = syncCourses.filter((course) => course.isChecked);
+    const selectedCourses = syncItems.filter((course) => course.isChecked);
 
     const requestOptions = {
       method: 'PUT',
@@ -56,12 +56,10 @@ export default function CoursesPage() {
     fetch('/api/media/sync', requestOptions)
       .then((res) => res.json())
       .then(() => {
-        console.log('Data synced');
-
         fetch(`/api/media`)
           .then((res) => res.json())
           .then((data) => {
-            setCourses(data);
+            setScanItems(data);
           });
       });
 
@@ -89,7 +87,7 @@ export default function CoursesPage() {
             </tr>
           </thead>
           <tbody>
-            {courses.map((course) => (
+            {scanItems.map((course) => (
               <tr key={course.id} className="border-t">
                 <td className="px-4 py-2">
                   <Link
@@ -107,7 +105,7 @@ export default function CoursesPage() {
 
         {isModalOpen && (
           <ScanFilesModal
-            syncCourses={syncCourses}
+            syncCourses={syncItems}
             handleCheckboxChange={handleCheckboxChange}
             handleSave={handleSave}
             setIsModalOpen={setIsModalOpen}
