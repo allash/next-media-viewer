@@ -1,8 +1,9 @@
+'use client';
+
 import '@/app/ui/global.css';
-import { FileItem } from '@/models/fileItem';
-import findFileItems from '@/lib/findFileItems';
-import findFileItemById from '@/lib/findFileItemById';
 import Sidebar from '@/app/ui/dashboard/Sidebar';
+import { useEffect } from 'react';
+import { useAppContext } from '@/app/ui/components/AppContextProvider';
 
 export default function CourseDetailsLayout({
   children,
@@ -11,10 +12,15 @@ export default function CourseDetailsLayout({
   children: React.ReactNode;
   params: { id: string };
 }) {
-  const fileItems: FileItem[] = findFileItems();
-  const fileItem = findFileItemById(fileItems, params.id);
-
   const { id } = params;
+
+  const { fetchItemById, fileItem } = useAppContext();
+
+  useEffect(() => {
+    fetchItemById(id);
+  }, [id]);
+
+  if (fileItem == null) return null;
 
   return (
     <>

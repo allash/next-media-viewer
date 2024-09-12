@@ -3,14 +3,14 @@
 import VideoPlayer from '@/app/ui/components/VideoPlayer';
 import removeFileExtension from '@/lib/helpers/removeFileExtension';
 import { FileItem } from '@/models/fileItem';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 export default function VideoPage({
   params,
 }: {
   params: { id: string; videoId: string };
 }) {
-  const [fileItem, setFileItem] = React.useState<FileItem | null>(null);
+  const [fileItem, setFileItem] = useState<FileItem | null>(null);
   const { videoId } = params;
 
   useEffect(() => {

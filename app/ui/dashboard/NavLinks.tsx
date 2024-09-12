@@ -16,7 +16,6 @@ type NavLinksProps = {
 
 const NavLinks: React.FC<NavLinksProps> = ({ id, fileItems }) => {
   const activeSegment = useSelectedLayoutSegment();
-
   const renderStructure = (fileItems: FileItem[], depth = 0): JSX.Element => (
     <>
       {fileItems.map((item, idx) => (

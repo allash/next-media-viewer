@@ -3,12 +3,15 @@
 import { FileItem } from '@/models/fileItem';
 import React, { useEffect } from 'react';
 import ReactPlayer from 'react-player';
+import { useAppContext } from './AppContextProvider';
 
 type VideoPlayerProps = {
   fileItem: FileItem;
 };
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({ fileItem }) => {
+  const { updateFileItemProgress } = useAppContext();
+
   const [isPlaying, setIsPlaying] = React.useState(true);
   const [isReady, setIsReady] = React.useState(false);
   const [isMounted, setIsMounted] = React.useState(false);
@@ -44,6 +47,8 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ fileItem }) => {
         });
       } catch (error) {
         console.log('Error sending timestamp: ', timestamp);
+      } finally {
+        updateFileItemProgress(fileItem.id, percentage);
       }
     };
 
@@ -78,10 +83,11 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ fileItem }) => {
         controls={true}
         light={false}
         pip={true}
-        // playing={isPlaying}
+        playing={isPlaying}
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
         onEnded={() => setIsPlaying(false)}
+        onStart={() => setIsPlaying(false)}
         onReady={onReady}
         // onSeek={(e) => console.log('onSeek', e)}
       />

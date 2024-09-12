@@ -18,7 +18,7 @@ export default function CoursesPage() {
       });
   }, []);
 
-  const handleSync = () => {
+  const handleScan = () => {
     fetch(`/api/media/scan`)
       .then((res) => res.json())
       .then((data: ScanItem[]) => {
@@ -29,7 +29,6 @@ export default function CoursesPage() {
         }
 
         setSyncItems(data);
-
         setIsModalOpen(true);
       });
   };
@@ -74,7 +73,7 @@ export default function CoursesPage() {
 
           <button
             className="mb-4 rounded bg-blue-500 px-4 py-2 text-white"
-            onClick={handleSync}
+            onClick={handleScan}
           >
             Scan
           </button>
