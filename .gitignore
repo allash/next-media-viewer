@@ -40,3 +40,4 @@ next-env.d.ts
 !/public/collections/.gitkeep
 db.json
 build.sh
+.idea
