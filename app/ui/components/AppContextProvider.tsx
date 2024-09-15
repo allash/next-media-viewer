@@ -40,7 +40,7 @@ export const AppContextProvider: React.FC<{ children: ReactNode }> = ({
       id,
       percentage,
     );
-    setFileItem({ ...fileItem });
+    setFileItem({ ...(fileItem as FileItem) });
   };
 
   const updateFileProgress = (

@@ -42,3 +42,4 @@ db.json
 build.sh
 .idea
 data/db/db.json
+docker-compose.yaml
